@@ -11,7 +11,7 @@
         </div>
 
         <div class="card-body">
-            <form action="/pegawai/store" method="post">
+            <form action="/pegawai/store" method="post" onsubmit="return validasiForm()">
                 {{ csrf_field() }}
 
                 <div class="row mb-3">
