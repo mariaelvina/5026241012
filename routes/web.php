@@ -6,6 +6,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PegawaiDBController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\KursiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -94,3 +95,11 @@ Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
 Route::get('/siswa/{nrp}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
 Route::put('/siswa/{nrp}', [SiswaController::class, 'update'])->name('siswa.update');
 Route::delete('/siswa/{nrp}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+
+// Route CRUD Kursi
+Route::get('/kursi', [KursiController::class, 'index'])->name('kursi.index');
+Route::get('/kursi/create', [KursiController::class, 'create'])->name('kursi.create');
+Route::post('/kursi', [KursiController::class, 'store'])->name('kursi.store');
+Route::get('/kursi/{kodekursi}/edit', [KursiController::class, 'edit'])->name('kursi.edit');
+Route::put('/kursi/{kodekursi}', [KursiController::class, 'update'])->name('kursi.update');
+Route::delete('/kursi/{kodekursi}', [KursiController::class, 'destroy'])->name('kursi.destroy');
