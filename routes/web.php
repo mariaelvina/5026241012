@@ -7,6 +7,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PegawaiDBController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\KursiController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\NilaiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -103,3 +105,14 @@ Route::post('/kursi', [KursiController::class, 'store'])->name('kursi.store');
 Route::get('/kursi/{kodekursi}/edit', [KursiController::class, 'edit'])->name('kursi.edit');
 Route::put('/kursi/{kodekursi}', [KursiController::class, 'update'])->name('kursi.update');
 Route::delete('/kursi/{kodekursi}', [KursiController::class, 'destroy'])->name('kursi.destroy');
+
+// Route CRUD Keranjang Belanja
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjangbelanja.index');
+Route::get('/keranjang/beli', [KeranjangController::class, 'create'])->name('keranjangbelanja.create');
+Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjangbelanja.store');
+Route::delete('/keranjang/{ID}', [KeranjangController::class, 'destroy'])->name('keranjangbelanja.destroy');
+
+// Route CRUD Nilai Kuliah
+Route::get('/nilai', [NilaiController::class, 'index'])->name('nilaikuliah.index');
+Route::get('/nilai/tambah', [NilaiController::class, 'create'])->name('nilaikuliah.create');
+Route::post('/keranjang', [NilaiController::class, 'store'])->name('nilaikuliah.store');

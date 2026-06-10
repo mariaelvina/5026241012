@@ -30,10 +30,10 @@
                         <a class="nav-link" href="/siswa">Siswa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Latihan 1</a>
+                        <a class="nav-link" href="/nilai">Latihan 1</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Latihan 2</a>
+                        <a class="nav-link" href="/keranjang">Latihan 2</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">EAS</a>
