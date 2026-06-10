@@ -1,44 +1,84 @@
 @extends('template')
-@section('title', 'Data Kursi')
+@section('title', 'Edit Data Kursi')
 @section('konten')
 
-    <h2>Edit Data Kursi</h2>
+    <a href="{{ route('kursi.index') }}" class="btn btn-secondary mb-4">Kembali</a>
 
     @if ($errors->any())
-        <ul style="color: red;">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
-    <form action="{{ route('kursi.update', $kursi->kodekursi) }}" method="POST" onsubmit="return validasiForm()">
-        @csrf
-        @method('PUT')
+    <div class="card">
+        <div class="card-header fw-bold">
+            Form Edit Data Kursi
+        </div>
 
-        <p>
-            <label>Merk Kursi</label><br>
-            <input type="text" name="merkkursi" id="merkkursi" maxlength="30" value="{{ old('merkkursi', $kursi->merkkursi) }}">
-        </p>
+        <div class="card-body">
+            <form action="{{ route('kursi.update', $kursi->kodekursi) }}" method="POST" onsubmit="return validasiForm()">
+                @csrf
+                @method('PUT')
 
-         <p>
-            <label>Stok Kursi</label><br>
-            <input type="number" name="stockkursi" id="stockkursi" min="0" value="{{ old('stockkursi', $kursi->stockkursi) }}">
-        </p>
+                <div class="row mb-3">
+                    <label for="merkkursi" class="col-sm-2 col-form-label">Merk Kursi</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="merkkursi" id="merkkursi" class="form-control" maxlength="30" value="{{ old('merkkursi', $kursi->merkkursi) }}">
+                    </div>
+                </div>
 
-        <p>
-            <label>Tersedia</label><br>
-            <select name="tersedia" id="tersedia">
-                <option value="Y" {{ old('tersedia', $kursi->tersedia) == 'Y' ? 'selected' : '' }}>Ya</option>
-                <option value="T" {{ old('tersedia', $kursi->tersedia) == 'T' ? 'selected' : '' }}>Tidak</option>
-            </select>
-        </p>
+                <div class="row mb-3">
+                    <label for="stockkursi" class="col-sm-2 col-form-label">Stok Kursi</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="stockkursi" id="stockkursi" class="form-control" min="0" value="{{ old('stockkursi', $kursi->stockkursi) }}">
+                    </div>
+                </div>
 
-        <button type="submit">Simpan</button>
-        <a href="{{ route('kursi.index') }}">Kembali</a>
-    </form>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Tersedia</label>
+                    <div class="col-sm-10 d-flex align-items-center">
+                        <div class="form-check form-switch fs-5">
+                            <input class="form-check-input" type="checkbox" role="switch" id="toggleTersedia"
+                                   {{ old('tersedia', $kursi->tersedia) == 'Y' ? 'checked' : '' }}>
+                            <label class="form-check-label text-muted ms-2" id="labelTersedia">Ya</label>
+                        </div>
+                        <input type="hidden" name="tersedia" id="tersedia" value="{{ old('tersedia', $kursi->tersedia) }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-sm-2 col-sm-10">
+                        <input type="submit" value="Simpan Data" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
     <script>
+        const toggle = document.getElementById('toggleTersedia');
+        const label = document.getElementById('labelTersedia');
+        const hiddenInput = document.getElementById('tersedia');
+
+        function updateToggleState() {
+            if (toggle.checked) {
+                label.innerText = 'Ya';
+                hiddenInput.value = 'Y';
+            } else {
+                label.innerText = 'Tidak';
+                hiddenInput.value = 'T';
+            }
+        }
+
+        updateToggleState();
+
+        toggle.addEventListener('change', updateToggleState);
+
         function validasiForm() {
             let merkkursi = document.getElementById('merkkursi').value.trim();
             let stockkursi = document.getElementById('stockkursi').value.trim();
@@ -51,7 +91,7 @@
                     icon: "error"
                 });
                 return false;
-        }
+            }
 
             if (merkkursi.length > 30) {
                 Swal.fire({
@@ -75,15 +115,6 @@
                 Swal.fire({
                     title: "Kesalahan Input Data!",
                     text: "Stok kursi tidak boleh kurang dari 0",
-                    icon: "error"
-                });
-                return false;
-            }
-
-            if (tersedia === '') {
-                Swal.fire({
-                    title: "Kesalahan Input Data!",
-                    text: "Status ketersediaan wajib dipilih",
                     icon: "error"
                 });
                 return false;
